@@ -14,6 +14,10 @@
 
 namespace at::native { namespace {
 
+#if defined(__GNUC__) && __GNUC__ == 14 && defined(__aarch64__) && !defined(__ARM_FEATURE_SVE)
+// Workaround for gcc-14.2.0 ICE during RTL pass: expand when compiling for NEON
+__attribute__((optimize("no-tree-vectorize")))
+#endif
 // fixes segfaults for GCC >= 12 on some AArch64 cpus https://github.com/pytorch/pytorch/issues/157626
 #if defined(__GNUC__) && __GNUC__ >= 12 && defined(__aarch64__)
 #pragma GCC push_options
