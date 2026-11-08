@@ -240,7 +240,7 @@ class Vectorized<BFloat16> {
   Vectorized<BFloat16> le(const Vectorized<BFloat16>& other) const;
 };
 
-#if defined(__GNUC__) && __GNUC__ == 14
+#if defined(__GNUC__) && __GNUC__ == 14 && defined(__ARM_FEATURE_SVE)
 // Workaround for gcc-14.2.0 ICE during RTL pass: vregs when compiling for SVE
 __attribute__((optimize("no-tree-vectorize")))
 #endif
